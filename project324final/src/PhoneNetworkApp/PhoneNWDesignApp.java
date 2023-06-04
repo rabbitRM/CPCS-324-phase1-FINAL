@@ -6,10 +6,11 @@
    Areej Omar Baeshen  	    2105759
    Furat Jamel Alfarsi 	    2009624
 
-  input requirements : The user will decide to get MST from a graph its information is written in a file 
+  Control structure : the program will depend on the use of array, arraylist, linked List, map and min heap
+  Input requirements : The user will decide to get MST from a graph its information is written in a file 
                        OR enter the number of locations , routes , if the graph is directed or not 
                        and let the program randomly generate a graph 
-  output results : printing all the paths with their cost, additionally showing the optimal cost 
+  Output results : printing all the paths with their cost, additionally showing the optimal cost 
 
   Cites : prim --> https://gist.github.com/thmain/a3fcfe0933c55e3402cb7709f2d043ed#file-primusingminheap-java
           kruskal --> https://www.youtube.com/watch?v=ID00PMy0-vE , https://www.algotree.org/algorithms/disjoint_set/ ,
