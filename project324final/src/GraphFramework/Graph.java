@@ -8,6 +8,7 @@ import java.util.LinkedList;
 import java.util.Scanner;
 import java.util.Random;
 
+
 public abstract class Graph {
 
     // Defining the data feilds
@@ -97,50 +98,71 @@ public abstract class Graph {
 
     public abstract Edge createEdge(Vertex source, Vertex target, int weight);
 
+    
     //-----------------------------------------------------------------------------
     // method n takes as parameters the number of vertices and the number of edges
     // It is responsible for creating a graph object with the specified parameters 
     // and randomly initializes the vertices’ labels, creating edges that connects the created vertices randomly
-    // and assigning them random weights alson Makeing sure that the resulting graph is connected. 
-    public void makeGraph(int vertexNum, int eno, int isdia) {
+    // and assigning them random weights alson Makeing sure that the resulting graph is connected
+    public void makeGraph(int vertexNum, int edgeNum, int isdirected) {
 
-        this.isDiagraph = isdia == 0 ? false : true;
+        // checking if the graph is directed or not 
+        this.isDiagraph = isdirected == 0 ? false : true;
+
+        // creating the adjacency list
         adjacencylist = new LinkedList[vertexNum];
-        //initialize adjacency lists for all the vertices
+
         for (int i = 0; i < vertexNum; i++) {
             adjacencylist[i] = new LinkedList<>();
         }
 
+        // Adding the vertices to its list in the graph
         for (int i = 0; i < vertexNum; i++) {
 
             vertices.add(createVertex(i));
-            // incrementing the vertices number as requested ! 
+
+            // incrementing the vertices number in the graph
             vertexNo++;
         }
 
-        // object of Random class
-        Random randm = new Random();
-        // ensure that all verts are connected
+        // creating random object to get random weights
+        Random random = new Random();
+
+        // loop to connect vertices together
         for (int i = 0; i < vertexNum - 1; i++) {
-            int weight = randm.nextInt(20) + 1;//generate random edge weights between 0-20
-            addEdge(vertices.get(i), vertices.get(i + 1), weight);    //connect verts
-            if (!isDiagraph) {
-                addEdge(vertices.get(i + 1), vertices.get(i), weight);
-            }
+
+            // getting random weights between 1-40
+            int weight = random.nextInt(40) + 1;
+
+            // adding the new edge 
+            addEdge(vertices.get(i), vertices.get(i + 1), weight);
+
         }
 
-        // generate edges bewteen verts with the remaining edges
-        int remEdges = eno - (vertexNum - 1);
+        // getting the number of remining edges we still have to create and connect
+        int reminingEdges = edgeNum - (vertexNum - 1);
 
-        for (int i = 0; i < remEdges; i++) {
-            int source = randm.nextInt(vertexNo);
-            int target = randm.nextInt(vertexNo);
-            if (target == source || areConnected(vertices.get(source), vertices.get(target))) { // to avoid self loops and duplicate edges
+        // loop to create the remining edges
+        for (int i = 0; i < reminingEdges; i++) {
+
+            // using the random object to get random source and target to connects
+            // the random numbers will be between 0 - vertexNo
+            int source = random.nextInt(vertexNo);
+            int target = random.nextInt(vertexNo);
+
+            // checking if the random target and source are the same or the these two vertices are already connected
+            if (target == source || areConnected(vertices.get(source), vertices.get(target))) {
+
+                // because we dont want this iteration to go to waste , we decrement as if nothing happened
                 i--;
+
+                // go back to the begining of the loop 
                 continue;
             }
-            // generate random weights in range 0 to 20
-            int weight = randm.nextInt(20) + 1;
+
+            // getting random weights between 1-40
+            int weight = random.nextInt(40) + 1;
+
             // add edge to the graph
             addEdge(vertices.get(source), vertices.get(target), weight);
 
@@ -148,6 +170,8 @@ public abstract class Graph {
 
     }
 
+    
+    //-----------------------------------------------------------------------------
     // method to check if two vetices are connect with an edge 
     public static boolean areConnected(Vertex v1, Vertex v2) {
 
@@ -168,16 +192,21 @@ public abstract class Graph {
         return false;
     }
 
+    
+    //-----------------------------------------------------------------------------
     // method that reads the edges and vertices from the text file whose name is
     // specified by the parameter filename and place the data in the Graph
     public void readGraphFromFile(String fileName) throws FileNotFoundException {
-
-        int eno = 0, vno = 0;
+        
+        // initializing the variables with 0 
+        int edgeNum = 0, vertexNum = 0;
 
         // checking if the file exist and print 
         File f = new File(fileName);
         if (!f.exists()) {
+           
             System.out.println("File Does not exist !");
+      
         }
 
         // creating 2 scanner object
@@ -187,48 +216,62 @@ public abstract class Graph {
         // scanner object to read the labels of each vertex 
         Scanner input2 = new Scanner(f);
 
+        // skipping to the part needed to be read which is( vertices labels )
         input2.nextLine();
         input2.nextLine();
 
+        // skipping the word diagraph in the input file , because there is no meaning in reading it !
         input.next();
 
+        // checking if the graph is directed or not 
         isDiagraph = input.nextInt() == 0 ? false : true;
 
-        eno = input.nextInt();
-        vno = input.nextInt();
+        // reading the edges number 
+        edgeNum = input.nextInt();
 
-        adjacencylist = new LinkedList[vno];
-        //initialize adjacency lists for all the vertices
-        for (int i = 0; i < vno; i++) {
+        //reading the vertices number 
+        vertexNum = input.nextInt();
+
+         // creating the adjacency list 
+        adjacencylist = new LinkedList[vertexNum];
+        
+        for (int i = 0; i < vertexNum; i++) {
+           
             adjacencylist[i] = new LinkedList<>();
+       
         }
 
-        // list to store the labels 
-        int[] listLabels = new int[vno];
+         // creating a list to store the vertices labels 
+        int[] listLabels = new int[vertexNum];
 
-        // counter act like index for the label list
+        // creating a counter to be the index for the labels list
         int counter = 0;
 
-        // loop to store the distinct labels of each edge 
-        for (int i = 0; i < eno; i++) {
+        // loop to store the distinct labels of each edge
+        for (int i = 0; i < edgeNum; i++) {
 
-            // reading the label 
+            // reading the character labels from the file 
             char ch = input2.next().charAt(0);
 
-            // a flag to know wether to add the label to the list or not 
+            // a flag to know wether to add the labels to the list or not 
             boolean canAdd = true;
 
-            // loop to go through the list labels
-            // to check if the label is already exist
+             // loop to go through the list labels
             for (int j = 0; j < listLabels.length; j++) {
 
+                // checking if the first label is already stored 
+                // because we store the labels as integers , when comparing we need to convert the char nito integer
+                // by substracting 'A' from it we will get a number, hence valid comparison
                 if (listLabels[j] == (ch - 'A')) {
 
+                     // if the first label is already stored , then make the flag1 = false 
                     canAdd = false;
                     break;
                 }
             }
 
+            // moving the pointer to the next line , 
+            // because we dont need to read the weights of the edges with this pointer 
             input2.nextLine();
 
             // if the flag = true , then we can add the label 
@@ -239,8 +282,9 @@ public abstract class Graph {
             }
         }
 
+        // After getting the labels , now we create the vertices with these labels 
         // Adding the vertices to its list in the graph
-        for (int i = 0; i < vno; i++) {
+        for (int i = 0; i < vertexNum; i++) {
 
             vertices.add(createVertex(listLabels[i]));
 
@@ -248,14 +292,14 @@ public abstract class Graph {
             vertexNo++;
         }
 
-        // Adding the edges 
+        // connecting the vertices together ( creating edges ) 
         // creating and initializing the needed variables 
         char label1, label2;
 
         Vertex v1 = null, v2 = null;
 
-        // loop to go through each edge in the file 
-        for (int i = 0; i < eno; i++) {
+        // loop to go through each edge in the file  
+        for (int i = 0; i < edgeNum; i++) {
 
             // reading the labels for the source and target vetices 
             label1 = input.next().charAt(0);
