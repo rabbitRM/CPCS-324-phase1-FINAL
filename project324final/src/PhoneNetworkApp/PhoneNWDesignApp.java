@@ -52,9 +52,8 @@ public class PhoneNWDesignApp {
         //in milliseconed between startTime and endTime variables
         double result;
         
-        System.out.println("\t -------Test and compare Different Minimum Spanning Tree Algorithms-------\n");
-        System.out.println("\t1- Kruskal's Algorithm& Prim's Algorithm (based on Priority Queue)\n"
-                + "\t2- Prim's Algorithm (based on Min Heap)& Prim's Algorithm(based on Priority Queue)");
+        System.out.println("\t -------Comparing Different Algorithms That produce MST-------\n");
+        System.out.println("\t1-Prim's Algorithm (based on Min Heap) and 2- Kruskal's Algorithm & ");
        
         // letting the user pick a choice
         System.out.print(">> Enter your choice (1 or 2): ");
