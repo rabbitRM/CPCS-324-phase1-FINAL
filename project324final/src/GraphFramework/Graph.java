@@ -1,7 +1,5 @@
 package GraphFramework;
 
-import PhoneNetworkApp.Line;
-import PhoneNetworkApp.Office;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -9,7 +7,6 @@ import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.Scanner;
 import java.util.Random;
-import PhoneNetworkApp.BluePrintsGraph;
 
 public abstract class Graph {
 
