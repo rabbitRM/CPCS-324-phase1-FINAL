@@ -118,7 +118,7 @@ public class PhoneNWDesignApp {
         endTime = System.currentTimeMillis();
        
         // computing the time it took the prim to process
-        result = (double) (endTime - startTime)/1000;
+        result = (double) (endTime - startTime);
         
         // checking if it is required to print the time or not
         if(printTime)
@@ -139,7 +139,7 @@ public class PhoneNWDesignApp {
         endTime = System.currentTimeMillis();
         
         // computing the time it took kruskal to process
-        result = (double) (endTime - startTime) / 1000 ;
+        result = (double) (endTime - startTime) ;
         
         // checking if it is required to print the time or not
         if(printTime)
