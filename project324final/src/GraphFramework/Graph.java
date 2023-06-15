@@ -134,8 +134,11 @@ public abstract class Graph {
             // getting random weights between 1-40
             int weight = random.nextInt(40) + 1;
 
+            // getting the target randomly
+            int target = random.nextInt(vertexNo);
+            
             // adding the new edge 
-            addEdge(vertices.get(i), vertices.get(i + 1), weight);
+            addEdge(vertices.get(i), vertices.get(target), weight);
 
         }
 
